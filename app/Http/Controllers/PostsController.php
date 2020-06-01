@@ -8,12 +8,17 @@
     {
         public function index()
         {
-            return view('posts.index');
+            $posts = Post::all();
+            return view('posts.index', compact('posts'));
         }
 
-        public function show()
+        public function show(Post $post)
         {
-            return view('posts.show');
+            return view('posts.show', compact('post'));
+           /*
+           //OR we can use this way and receive the $id as parameter
+            $post = Post::find($id);
+           */
         }
 
         public function create()
