@@ -8,17 +8,22 @@
 
         <form method="POST" action="/posts">
             @csrf
+
+
+            @include('layouts.errors')
+
             <div class="form-group">
-                <label for="title">Title</label>
+                <label for="title">Title:</label>
                 <input type="text" class="form-control" id="title" name="title">
             </div>
 
             <div class="form-group">
-                <label for="body">Body</label>
-                <textarea type="text" class="form-control" name="body" id="body" cols="30" rows="10"></textarea>
+                <label for="body">Body:</label>
+                <textarea type="text" class="form-control" name="body" id="body"></textarea>
             </div>
 
             <button type="submit" class="btn btn-primary">Publish</button>
         </form>
+
     </div>
 @endsection

@@ -23,7 +23,23 @@
 
         public function store()
         {
+            // Add some of server side validation
+            $this . $this->validate(request(),[
+                    'title' => 'required',
+                    'body' => 'required'
+                ]
+            );
+
+            Post::create([
+                'title' => request('title'),
+                'body' => request('body')
+            ]);
+
+            //and then redirect to the home page
+            return redirect('/');
             /*
+             * ANOTHER way to create a post
+             *
             //Create a new post using the request data
             $post = new Post();
             $post->body = request('title');
@@ -32,15 +48,6 @@
             //save it to database
             $post->save();
             */
-
-            // The above code is equal to
-            Post::create([
-                'title' => request('title'),
-                'body' => request('body')
-            ]);
-
-            //and then redirect to the home page
-            return redirect('/');
 
         }
     }
