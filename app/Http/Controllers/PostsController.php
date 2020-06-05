@@ -8,17 +8,18 @@
     {
         public function index()
         {
-            $posts = Post::all();
+            $posts = Post::latest()->get();
+
             return view('posts.index', compact('posts'));
         }
 
         public function show(Post $post)
         {
             return view('posts.show', compact('post'));
-           /*
-           //OR we can use this way and receive the $id as parameter
-            $post = Post::find($id);
-           */
+            /*
+            //OR we can use this way and receive the $id as parameter
+             $post = Post::find($id);
+            */
         }
 
         public function create()
@@ -29,7 +30,7 @@
         public function store()
         {
             // Add some of server side validation
-            $this . $this->validate(request(),[
+            $this->validate(request(), [
                     'title' => 'required',
                     'body' => 'required'
                 ]
