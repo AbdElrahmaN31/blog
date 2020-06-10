@@ -3,7 +3,7 @@
     namespace App\Http\Controllers;
 
     use App\User;
-    use Illuminate\Validation\ValidationException;
+    use Illuminate\Support\Facades\Hash;
 
     class RegistrationController extends Controller
     {
@@ -29,13 +29,13 @@
             }
 
             //create the user
-            $user = User::create( request(['name','email','password']));
-
+            $user = User::create(array_merge(request(['name', 'email']), [
+                'password' => Hash::make(request('password'))
+            ]));
             //sign him in
             auth()->login($user);
 
             //redirect him to the home page
             return redirect()->home();
-
         }
     }
