@@ -16,10 +16,12 @@
             @include('comments.index')
         </div>
 
-        <div class="add-comment">
-            <hr/>
-            @include('comments.add')
-        </div>
+        @if(auth()->check())
+            <div class="add-comment">
+                <hr/>
+                @include('comments.add')
+            </div>
+        @endif
 
     </div>
 @endsection
