@@ -45,4 +45,12 @@
                 }
             }
         }
+
+        public static function archives(){
+            return static::selectRaw('year(created_at) As year, monthname(created_at) As month,count(*) AS Published')
+                ->groupBy('year','month')
+                ->orderByRaw('min(created_at) desc')
+                ->get()
+                ->toArray();
+        }
     }
