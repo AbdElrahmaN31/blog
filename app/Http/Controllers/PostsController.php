@@ -3,6 +3,7 @@
     namespace App\Http\Controllers;
 
     use App\Post;
+    use Carbon\Carbon;
 
     class PostsController extends Controller
     {
@@ -14,9 +15,19 @@
 
         public function index()
         {
-            $posts = Post::latest()->get();
 
-            return view('posts.index', compact('posts'));
+            $posts = Post::latest()
+                ->filter(request(['month','year']))
+                ->get();
+
+            //Temporary.
+            $archives = Post::selectRaw('year(created_at) As year, monthname(created_at) As month,count(*) AS Published')
+                ->groupBy('year','month')
+                ->orderByRaw('min(created_at) desc')
+                ->get()
+                ->toArray();
+
+            return view('posts.index', compact('posts','archives'));
         }
 
         public function show(Post $post)
@@ -46,20 +57,7 @@
                 new Post(request(['title','body']))
             );
 
-
             //and then redirect to the home page
             return redirect('/');
-            /*
-             * ANOTHER way to create a post
-             *
-            //Create a new post using the request data
-            $post = new Post();
-            $post->body = request('title');
-            $post->title = request('body');
-
-            //save it to database
-            $post->save();
-            */
-
         }
     }

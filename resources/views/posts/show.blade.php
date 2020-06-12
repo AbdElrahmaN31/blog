@@ -4,7 +4,10 @@
     <div class="col-sm-8 blog-main">
         <div class="blog-post">
             <h1 class="blog-post-title"> {{ $post->title }}</h1>
-            <p class="blog-post-meta">{{ $post->created_at->toFormattedDateString() }}</p>
+            <p class="blog-post-meta">
+                <a href="#">{{$post->user->name}}</a> from
+                {{ $post->created_at->diffForHumans() }}
+            </p>
             <p>{{$post->body}}</p>
         </div>
 
