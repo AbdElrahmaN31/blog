@@ -1,6 +1,8 @@
 <?php
 
+    use Illuminate\Support\Facades\App;
     use Illuminate\Support\Facades\Route;
+
     /*
     |--------------------------------------------------------------------------
     | Web Routes
@@ -11,6 +13,8 @@
     | contains the "web" middleware group. Now create something great!
     |
     */
+
+    dd(resolve('App\Billing\Stripe'));
 
     Route::get('/','PostsController@index')->name('home');
     Route::get('/posts/create','PostsController@create');

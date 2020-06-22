@@ -3,7 +3,7 @@
     namespace App\Http\Controllers;
 
     use App\Post;
-    use Carbon\Carbon;
+    use App\Repositories\Posts;
 
     class PostsController extends Controller
     {
@@ -13,12 +13,10 @@
             $this->middleware('auth')->except(['index', 'show']);
         }
 
-        public function index()
+        public function index(Posts $posts)
         {
+            $posts = $posts->all();
 
-            $posts = Post::latest()
-                ->filter(request(['month','year']))
-                ->get();
 
             return view('posts.index', compact('posts'));
         }
@@ -47,7 +45,7 @@
             );
 
             auth()->user()->publish(
-                new Post(request(['title','body']))
+                new Post(request(['title', 'body']))
             );
 
             //and then redirect to the home page
