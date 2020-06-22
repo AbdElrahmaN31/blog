@@ -3,6 +3,7 @@
     namespace App\Http\Controllers;
 
     use App\User;
+    use App\Mail\Welcome;
     use Illuminate\Support\Facades\Hash;
 
     class RegistrationController extends Controller
@@ -32,8 +33,12 @@
             $user = User::create(array_merge(request(['name', 'email']), [
                 'password' => Hash::make(request('password'))
             ]));
+
             //sign him in
             auth()->login($user);
+
+            //sending welcome email
+            \Mail::to($user)->send(new Welcome($user));
 
             //redirect him to the home page
             return redirect()->home();
