@@ -2,6 +2,7 @@
 
     namespace App\Http\Controllers;
 
+    use App\Http\Requests\RegistrationRequest;
     use App\User;
     use App\Mail\Welcome;
     use Illuminate\Support\Facades\Hash;
@@ -18,16 +19,7 @@
             return view('registration.create');
         }
 
-        public function store(){
-            //validate the data
-            try {
-                $this->validate(request(), [
-                    'name' => 'required',
-                    'email' => 'required|email',
-                    'password' => 'required|confirmed'
-                ]);
-            } catch (ValidationException $e) {
-            }
+        public function store(RegistrationRequest $request){
 
             //create the user
             $user = User::create(array_merge(request(['name', 'email']), [
