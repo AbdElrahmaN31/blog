@@ -11,10 +11,9 @@
 
         public function all()
         {
-            return Post::all();
-            /*latest()
+            return Post::latest()
                 ->filter(request(['month','year']))
-                ->get();*/
+                ->get();
         }
 
     }

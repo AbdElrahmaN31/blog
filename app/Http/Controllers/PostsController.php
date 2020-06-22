@@ -17,7 +17,6 @@
         {
             $posts = $posts->all();
 
-
             return view('posts.index', compact('posts'));
         }
 
