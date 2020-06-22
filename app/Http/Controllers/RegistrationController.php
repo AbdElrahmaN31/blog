@@ -2,9 +2,9 @@
 
     namespace App\Http\Controllers;
 
-    use App\Http\Requests\RegistrationRequest;
-    use App\User;
+    use App\Http\Requests\RegistrationForm;
     use App\Mail\Welcome;
+    use App\User;
     use Illuminate\Support\Facades\Hash;
 
     class RegistrationController extends Controller
@@ -19,18 +19,10 @@
             return view('registration.create');
         }
 
-        public function store(RegistrationRequest $request){
+        public function store(RegistrationForm $form)
+        {
 
-            //create the user
-            $user = User::create(array_merge(request(['name', 'email']), [
-                'password' => Hash::make(request('password'))
-            ]));
-
-            //sign him in
-            auth()->login($user);
-
-            //sending welcome email
-            \Mail::to($user)->send(new Welcome($user));
+           $form->persist();
 
             //redirect him to the home page
             return redirect()->home();
