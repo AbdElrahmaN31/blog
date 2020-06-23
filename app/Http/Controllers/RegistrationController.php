@@ -24,6 +24,8 @@
 
            $form->persist();
 
+           session()->flash('message', 'Thanks so much for singing up!');
+
             //redirect him to the home page
             return redirect()->home();
         }
